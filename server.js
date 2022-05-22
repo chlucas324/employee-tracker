@@ -1,8 +1,10 @@
 // dependencies
 const inquirer = require('inquirer');
+const cTable = require("console.table");
 
 
 //add department
+const newDept = async () => {
 
 const department = await inquirer.prompt([
     {
@@ -19,9 +21,12 @@ const department = await inquirer.prompt([
         },
     },
 ]);
+await sql.addDept(department);
+choosePrompt();
+};
 
 // add employee
-
+const newEmployee = async () => {
 const employee = await inquirer.prompt([
     {
         type: "input",
@@ -65,8 +70,12 @@ const employee = await inquirer.prompt([
 },
 ]);
 
-//add a role
+await sql.addEmployee(employee);
+choosePrompt();
+}; 
 
+//add a role
+const newRole = async () => {
 const role = await inquirer.prompt([
     {
         type: "input",
@@ -98,7 +107,33 @@ const role = await inquirer.prompt([
      type: "list",
      name: "department_id",
      message: "What department does this role belong to?",
-     choices: depArr,
+     choices: deptArr,
      loop: false,
     }
 ]);
+
+await sql.addRole(role);
+choosePrompt();
+};
+
+//inital prompts
+const choosePrompt = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'prompt',
+            message: 'What would you like to do?',
+            choices: [
+              "Add a department",
+              "Add an employee",
+              "Add a role",
+              "Update employee's role",
+              "View all departments",
+              "View all roles"  
+            ],
+            loop: false,
+        },
+    ]);
+}
+
+choosePrompt();
