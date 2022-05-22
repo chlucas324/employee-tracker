@@ -1,6 +1,6 @@
-const e = require('express');
+// dependencies
 const inquirer = require('inquirer');
-const { deprecationEntries } = require('jest-config');
+
 
 //add department
 
