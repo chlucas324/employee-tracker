@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 const cTable = require('console.table');
 const sql = require('./lib/query');
-const optionsHelp =  require('./lib/options');
+const opt =  require('./lib/options');
 
 
 //add department
@@ -29,8 +29,8 @@ choosePrompt();
 
 // add employee
 const newEmployee = async () => {
-    const roleArr = await options.roleOptions();
-    const mgmtArr = await options.mgmtOptions();
+    const roleArr = await opt.roleOptions();
+    const mgmtArr = await opt.mgmtOptions();
     
     const employee = await inquirer.prompt([
     {
@@ -81,7 +81,7 @@ choosePrompt();
 
 //add a role
 const newRole = async () => {
-    const optionsArr = await options.deptOptions();
+    const optionsArr = await opt.deptOptions();
     const role = await inquirer.prompt([
     {
         type: "input",
@@ -113,7 +113,7 @@ const newRole = async () => {
      type: "list",
      name: "department_id",
      message: "What department does this role belong to?",
-     choices: deptArr,
+     choices: optionsArr,
      loop: false,
     }
 ]);
@@ -124,8 +124,8 @@ choosePrompt();
 
 //update employee role
 const updateEmployeeRole = async () => {
-    const roleArr = await options.roleOptions();
-    const employeeArr = await options.employeeOptions();
+    const roleArr = await opt.roleOptions();
+    const employeeArr = await opt.employeeOptions();
     
     const employee = await inquirer.prompt([
         {
