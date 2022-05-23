@@ -1,7 +1,8 @@
 // dependencies
 const inquirer = require('inquirer');
-const cTable = require("console.table");
+const cTable = require('console.table');
 const sql = require('./lib/query');
+const optionsHelp =  require('./lib/options');
 
 
 //add department
@@ -28,7 +29,10 @@ choosePrompt();
 
 // add employee
 const newEmployee = async () => {
-const employee = await inquirer.prompt([
+    const roleArr = await options.roleOptions();
+    const mgmtArr = await options.mgmtOptions();
+    
+    const employee = await inquirer.prompt([
     {
         type: "input",
         name: "first",
@@ -77,7 +81,8 @@ choosePrompt();
 
 //add a role
 const newRole = async () => {
-const role = await inquirer.prompt([
+    const optionsArr = await options.deptOptions();
+    const role = await inquirer.prompt([
     {
         type: "input",
         name: "title",
@@ -117,6 +122,72 @@ await sql.addRole(role);
 choosePrompt();
 };
 
+//update employee role
+const updateEmployeeRole = async () => {
+    const roleArr = await options.roleOptions();
+    const employeeArr = await options.employeeOptions();
+    
+    const employee = await inquirer.prompt([
+        {
+            type: "list",
+            name: "employee_id",
+            message: "What employee do you want to update?",
+            choices: employeeArr,
+            loop: false,
+        },
+        {
+            type: "list",
+            name: "role_id",
+            message: "What is the employee's role?",
+            choices: roleArr,
+            loop: false,
+        },
+    ]);
+await sql.updateEmployeeRoleById(employee);
+choosePrompt();
+
+}
+
+// view all departments 
+const viewDept = () => {
+    sql.getDept()
+
+    .then(([rows]) => {
+        console.log(cTable.getTable(rows));
+    })
+
+    .then(()=> {
+        choosePrompt();
+    });
+}
+
+// view all roles
+
+const viewRoles = () => {
+    sql.getRoles() 
+
+    .then(([rows]) => {
+        console.log(cTable.getTable(rows))
+    })
+
+    .then(() => {
+        choosePrompt();
+    })
+}
+
+//view all employees 
+const viewEmployees = () => {
+    sql.getEmployees()
+
+    .then(([rows]) => {
+        console.log(cTable.getTable(rows));
+    })
+
+    .then(() => {
+        choosePrompt();
+    })
+};
+
 //inital prompts
 const choosePrompt = () => {
     inquirer.prompt([
@@ -134,7 +205,40 @@ const choosePrompt = () => {
             ],
             loop: false,
         },
-    ]);
+    ])
+
+    .then((data) => {
+        const {prompt} = data;
+        console.log(prompt);
+        //switch case
+        switch(prompt) {
+            case 'Add a department':
+                newDept();
+                break;
+            case 'Add a role':
+                newRole();
+                break;
+
+            case 'Add an employee':
+                newEmployee();
+                break;
+            case 'Update employee role':
+                updateEmployeeRole();
+                break;
+            case 'View all departments':
+                viewDept();
+                break;
+            case 'View all employees':
+                viewEmployees();
+                break;
+            case 'View all roles':
+                viewRoles();
+                break;   
+
+            default: 
+            break;
+        }
+    })
 }
 
 choosePrompt();
