@@ -167,6 +167,7 @@ const viewRoles = () => {
     sql.getRoles() 
 
     .then(([rows]) => {
+        console.log('\n');
         console.log(cTable.getTable(rows))
     })
 
@@ -180,6 +181,7 @@ const viewEmployees = () => {
     sql.getEmployees()
 
     .then(([rows]) => {
+        console.log('\n');
         console.log(cTable.getTable(rows));
     })
 
@@ -201,6 +203,7 @@ const choosePrompt = () => {
               "Add a role",
               "Update employee's role",
               "View all departments",
+              "View all employees",
               "View all roles"  
             ],
             loop: false,
