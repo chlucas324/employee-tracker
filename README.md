@@ -10,7 +10,7 @@ A command line application that uses node, inquirer and MySQL to manage a compan
 * [Questions](#questions)
 
 ## Installation 
-The user clones the repository from GitHub.  This application requires Node.js and MySQL.  The user should connect to the database by runniing `mysql -u root -p` and entering the database password.  The user should source the schema file by running `source db/schema.sql`, and then source the seed file by running `source db/seeds.sql`.  
+The user clones the repository from GitHub.  This application requires Node.js and MySQL.  The user should connect to the database by running `mysql -u root -p` and entering the database password.  The user should source the schema file by running `source db/schema.sql`, and then source the seed file by running `source db/seeds.sql`.  Begin running node by entering `npm start` in the terminal.  
 
 ## Usage
 This web application allows users to view, add, and edit a company's employees, departments, and roles.
