@@ -5,6 +5,7 @@ const sql = require('./lib/query');
 const opt =  require('./lib/options');
 
 
+
 //add department
 const newDept = async () => {
 
@@ -129,21 +130,23 @@ const updateEmployeeRole = async () => {
     
     const employee = await inquirer.prompt([
         {
-            type: "list",
-            name: "employee_id",
-            message: "What employee do you want to update?",
-            choices: employeeArr,
-            loop: false,
+          type: "list",
+          name: "employee_id",
+          message: "What employee do you want to update?",
+          choices: employeeArr,
+          loop: false,
         },
         {
-            type: "list",
-            name: "role_id",
-            message: "What is the employee's role?",
-            choices: roleArr,
-            loop: false,
-        },
-    ]);
+          type: "list",
+          name: 'role_id',
+          message: "What is the employee's role?",
+          choices: roleArr,
+          loop: false,
+        }
+       ]);
+
 await sql.updateEmployeeRoleById(employee);
+
 choosePrompt();
 
 }
@@ -161,6 +164,20 @@ const viewDept = () => {
     });
 }
 
+//view all employees 
+const viewEmployees = () => {
+    sql.getEmployees()
+
+    .then(([rows]) => {
+        console.log('\n');
+        console.log(cTable.getTable(rows));
+    })
+
+    .then(() => {
+        choosePrompt();
+    })
+};
+
 // view all roles
 
 const viewRoles = () => {
@@ -176,19 +193,7 @@ const viewRoles = () => {
     })
 }
 
-//view all employees 
-const viewEmployees = () => {
-    sql.getEmployees()
 
-    .then(([rows]) => {
-        console.log('\n');
-        console.log(cTable.getTable(rows));
-    })
-
-    .then(() => {
-        choosePrompt();
-    })
-};
 
 //inital prompts
 const choosePrompt = () => {
@@ -221,11 +226,10 @@ const choosePrompt = () => {
             case 'Add a role':
                 newRole();
                 break;
-
             case 'Add an employee':
                 newEmployee();
                 break;
-            case 'Update employee role':
+            case "Update employee's role":
                 updateEmployeeRole();
                 break;
             case 'View all departments':
