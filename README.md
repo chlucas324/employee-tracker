@@ -15,6 +15,8 @@ The user clones the repository from GitHub.  This application requires Node.js a
 ## Usage
 This web application allows users to view, add, and edit a company's employees, departments, and roles.
 
+View video to see walk through [Screencastify](https://drive.google.com/file/d/1fU3CLpsY8k6KxtVgXXwyjJHK1MGDsypV/view)
+
 ## Contributing
 Contributors should read the installation section. 
 
